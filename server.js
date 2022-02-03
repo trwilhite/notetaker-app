@@ -11,6 +11,7 @@ const app = express();
 // provide static access to 'public' folder so routes don't have to be created for each indivual file
 app.use(express.static('public'));
 
+// middleware functions
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
