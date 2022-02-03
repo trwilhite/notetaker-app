@@ -11,15 +11,15 @@ router.get('/notes', (req, res) => {
 
 // post method to receive new notes added by client
 router.post('/notes', (req, res) => {
-    // body object that the client creates will include text and content varirables, then we use uuid to create a unique id for the created note
-    const { title, content } = req.body;
+    // body object that the client creates will include title and text varirables, then we use uuid to create a unique id for the created note
+    const { title, text } = req.body;
     const id = uuid.v4();
 
-    // created note variable includes the client's title and content, and adds the uniquely created id
-    const newNote = { title, content, id };
+    // created note variable includes the client's title and text, and adds the uniquely created id
+    const newNote = { title, text, id };
 
     // add the newly created note to the db file
-    db.push(newNote);
+    data.push(newNote);
     fs.writeFile(`./db/db.json`, JSON.stringify(data), (err) =>
         err
             ? console.error(err)
@@ -29,7 +29,7 @@ router.post('/notes', (req, res) => {
     );
 
     // return the new note to the client
-    res.json(db);
+    res.json(data);
 })
 
 module.exports = router;
