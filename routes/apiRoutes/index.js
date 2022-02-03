@@ -6,6 +6,10 @@ const uuid = require('uuid');
 
 // get method to read db.json file and return saved notes as JSON
 router.get('/notes', (req, res) => {
+    // read data from db.json file
+    const data = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
+
+    // return all saved notes as JSON
     res.json(data);
 });
 
@@ -30,6 +34,6 @@ router.post('/notes', (req, res) => {
 
     // return the new note to the client
     res.json(data);
-})
+});
 
 module.exports = router;
