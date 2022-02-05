@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const fs = require('fs');
-const data = require('../../db/db.json');
+let data = require('../../db/db.json');
 // use npm package uuid to create unique id's for each note
 const uuid = require('uuid');
 
 // get method to read db.json file and return saved notes as JSON
 router.get('/notes', (req, res) => {
     // read data from db.json file
-    const data = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
+    let data = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
 
     // return all saved notes as JSON
     res.json(data);
@@ -36,4 +36,17 @@ router.post('/notes', (req, res) => {
     res.json(data);
 });
 
+router.delete('/notes/:id', (req, res) => {
+    data = data.filter(note => note.id !== req.params.id);
+
+    fs.writeFile(`./db/db.json`, JSON.stringify(data), (err) =>
+        err
+            ? console.error(err)
+            : console.log(
+                `New note has been written to JSON file`
+            )
+    );
+
+    res.json(data);
+})
 module.exports = router;
